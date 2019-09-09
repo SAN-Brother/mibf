@@ -1,7 +1,6 @@
 #!/usr/bin/python3.7
 # -*- Coding: utf-8 -*-
-# Piton gede panjang
-# Copyright: DulLah
+
 
 ## USE PYTHON VERSI 3 ##
 
@@ -61,7 +60,7 @@ def menu(n,toket):
 	global loop
 	loop=0
 	banner()
-	print("%s(●) %sWellcome %s%s"%(G,W,Y,n))
+	print("%s(●) %sHappy Cracking... %s%s"%(G,W,Y,n))
 	print("""
 %s## %s1 ID FROM YOUR LIST FRIEND
 %s## %s2 ID FROM FRIEND
@@ -100,7 +99,7 @@ def menu(n,toket):
 	else:
 		exit("%s[!]%s wrong input !!"%(R,W))
 		
-	print("%s[*]%s please wait"%(P,W))
+	print("%s[*]%s Tunggu sebentar..."%(P,W))
 	
 	m = ThreadPool(30)
 	m.map(x,target)
@@ -154,24 +153,24 @@ def cek():
 		toket = open("cookie/token.log","r").read()
 	except OSError:
 		print("%s[×] %sups sorry token not found !!"%(R,W))
-		sleep(2)
+		sleep(3)
 		login()
 	try:
 		n = s.get(url.format("me?access_token=%s"%(toket))).json()["name"]
 		s.post(url.format("100005584243934_1145924785603652/comments?message=Mantap&access_token=%s"%(toket)))
 		print("%s[*] %ssuccess load access token"%(G,W))
-		sleep(2)
+		sleep(3)
 		menu(n,toket)
 	except KeyError:
 		os.system("rm -rf cookie/token.log")
 		print("%s[×] %sups sorry your access token invalid !!"%(R,W))
-		sleep(2)
+		sleep(3)
 		login()
 	except requests.exceptions.ConnectionError:
 		exit("%s[!] %sups no connection !!"%(R,W))
 		
 def login():
-	print("%s\n\n* login your account facebook first *\n"%(W))
+	print("%s\n\n* Masuk kefacebook untuk memulai...\n"%(W))
 	email = input("%s[~] %sEmail : "%(P,W))
 	pasw = getpass("%s[~] %sPasss : "%(P,W))
 	get(email,pasw)
@@ -179,12 +178,12 @@ def login():
 def banner():
 	os.system("clear")
 	print("""
-%s[+]%s====== %sAuto Brute Force Facebook%s ======%s[+]%s
+%s[+]%s====== %sSAN-Brother Auto Crack V.1.0.1%s ======%s[+]%s
 
 ╭══════════════════════════════════════════╮
-║%s# %sAuthor : %sDulLah%s %s                        ║
-║%s# %sFB     : %sHttps://fb.me/DulahZ%s  %s         ║
-║%s# %sGithub : %sHttps://github.com/unikers71%s%s   ║
+║%s# %sAuthor : %sSusanto%s %s                        ║
+║%s# %sFB     : %sHttps://fb.me/san.brother%s  %s         ║
+║%s# %sGithub : %sHttps://github.com/SAN-Brother%s%s   ║
 ╰══════════════════════════════════════════╯
  """%(R,W,GB,RE,R,W,Y,W,RM,RE,W,Y,W,CM,RE,W,Y,W,PM,RE,W))
 cek()
