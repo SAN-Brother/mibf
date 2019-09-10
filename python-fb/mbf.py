@@ -181,9 +181,9 @@ def banner():
 	print("""
 %s[+]%s====== %s SAN-Brother %s ======%s[+]%s
 ╭══════════════════════════════════════════╮
-║  %sʕ•ᴥ•ʔ%s	o Copyright    : S$sAN-Team$s  ║
-║ %sʕ•ᴥ•ʔ%s 	o Created Date : $s10-09-2019$s║
-║ %sʕ•ᴥ•ʔ$s  Repositories Education Version %sV.0.0.1.0 (Beta!)%s%s
+║       	o Copyright    : S$sAN-Team$s  ║
+║       	o Created Date : $s10-09-2019$s║
+║                 Repositories Education Version %sV.0.0.1.0 (Beta!)%s%s
 ╰══════════════════════════════════════════╯           
  """%(R,W,GB,RE,R,W,Y,W,RM,RE,W,Y,W,CM,RE,W,Y,W,PM,RE,W))
 cek()
