@@ -175,14 +175,7 @@ def login():
 	print("%s\n\n* login your account facebook first *\n"%(W))
 	email = input("%s[~] %sEmail : "%(P,W))
 	pasw = getpass("%s[~] %sPasss : "%(P,W))
-	get(email,pasw)
-	
-def jalan(z):
-	for e in z + '\n':
-		sys.stdout.write(e)
-		sys.stdout.flush()
-		time.sleep(0.05)		
-	
+	get(email,pasw)			
 def banner():
 	os.system("clear")
 	print("""
@@ -192,7 +185,6 @@ def banner():
 ║%s# %sReCode : %sSusanto%s  %s         ║
 ║%s# %sGithub : %sHttps://github.com/unikers71%s%s   ║
 ╰══════════════════════════════════════════╯
-           jalan "%s[+] L O A D I N G\n"......................... Succes"%
-		time.sleep(2)
+           
  """%(R,W,GB,RE,R,W,Y,W,RM,RE,W,Y,W,CM,RE,W,Y,W,PM,RE,W))
 cek()
