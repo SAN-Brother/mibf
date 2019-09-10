@@ -183,14 +183,16 @@ def login():
 	print(""")
 	jalan("%s[+] L O A D I N G\n"......................... Succes"%(W))
 		time.sleep(2)
-		login()
+		
 	
 def banner():
 	os.system("clear")
 	print("""
-%s[+]%s====== %sAuto Brute Force Facebook%s ======%s[+]%s
-
-$sv.1.0.02.1$s
-
+%s[+]%s====== %SAN-Brother Auto Crack V.0.0.1%s ======%s[+]%s
+╭══════════════════════════════════════════╮
+║%s# %sAuthor : %sDulLah%s %s                        ║
+║%s# %sReCode : %sSusanto%s  %s         ║
+║%s# %sGithub : %sHttps://github.com/unikers71%s%s   ║
+╰══════════════════════════════════════════╯
  """%(R,W,GB,RE,R,W,Y,W,RM,RE,W,Y,W,CM,RE,W,Y,W,PM,RE,W))
 cek()
