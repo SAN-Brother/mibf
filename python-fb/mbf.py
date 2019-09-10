@@ -180,8 +180,6 @@ def banner():
 	os.system("clear")
 	print("""
 %s[+]%s====== %s SAN-Brother %s ======%s[+]%s
-            $s/¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯%s
-              $s/$s
 ╭══════════════════════════════════════════╮
 ║  %s{\__/}%s	o Copyright    : S$sAN-Team$s  ║
 ║ %s( ●_● )%s 	o Created Date : $s10-09-2019$s║
