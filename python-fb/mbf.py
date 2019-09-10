@@ -179,7 +179,7 @@ def login():
 def banner():
 	os.system("clear")
 	print("""
-%s[+]%s====== %SAN-Brother Auto Crack V.0.0.1%s ======%s[+]%s
+%s[+]%s====== %s SAN-Brother Auto Crack V.0.0.1%s ======%s[+]%s
 ╭══════════════════════════════════════════╮
 ║%s# %sAuthor : %sDulLah%s %s                        ║
 ║%s# %sReCode : %sSusanto%s  %s         ║
