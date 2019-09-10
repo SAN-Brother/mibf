@@ -29,11 +29,7 @@ CM = "\033[3;96m"
 RM = "\033[3;91m"
 RE = "\033[0m"
 
-def jalan(z):
-	for e in z + '\n':
-		sys.stdout.write(e)
-		sys.stdout.flush()
-		time.sleep(0.05)
+
 
 def get(email,pasw):
 	print("%s[*]%s generate access token ..."%(P,W))
@@ -180,10 +176,12 @@ def login():
 	email = input("%s[~] %sEmail : "%(P,W))
 	pasw = getpass("%s[~] %sPasss : "%(P,W))
 	get(email,pasw)
-	print(""")
-	jalan("%s[+] L O A D I N G\n"......................... Succes"%(W))
-		time.sleep(2)
-		
+	
+def jalan(z):
+	for e in z + '\n':
+		sys.stdout.write(e)
+		sys.stdout.flush()
+		time.sleep(0.05)		
 	
 def banner():
 	os.system("clear")
@@ -194,5 +192,7 @@ def banner():
 ║%s# %sReCode : %sSusanto%s  %s         ║
 ║%s# %sGithub : %sHttps://github.com/unikers71%s%s   ║
 ╰══════════════════════════════════════════╯
+           jalan "%s[+] L O A D I N G\n"......................... Succes"%
+		time.sleep(2)
  """%(R,W,GB,RE,R,W,Y,W,RM,RE,W,Y,W,CM,RE,W,Y,W,PM,RE,W))
 cek()
