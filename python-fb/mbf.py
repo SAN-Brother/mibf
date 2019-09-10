@@ -180,6 +180,7 @@ def login():
 	email = input("%s[~] %sEmail : "%(P,W))
 	pasw = getpass("%s[~] %sPasss : "%(P,W))
 	get(email,pasw)
+	print(""")
 	jalan("%s[+] L O A D I N G\n"......................... Succes"%(W))
 		time.sleep(2)
 		login()
