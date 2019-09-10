@@ -175,15 +175,16 @@ def login():
 	print("%s\n\n* login your account facebook first *\n"%(W))
 	email = input("%s[~] %sEmail : "%(P,W))
 	pasw = getpass("%s[~] %sPasss : "%(P,W))
-	get(email,pasw)			
+	get(email,pasw)	
+	
 def banner():
 	os.system("clear")
 	print("""
-%s[+]%s====== %s SAN-Brother %s ======%s[+]%s
+%s[+]%s====== %sAUTO BRUTEFORCE FACEBOOK%s ======%s[+]%s
 ╭══════════════════════════════════════════╮
-║       	$so $sCopyright$s    : S$sAN-Team$s  ║
-║       	%so %sCreated Date$s : $s10-09-2019$s║
-║                 $sRepositories$s Education Version %sV.0.0.1.0 Beta!%s%s
-╰══════════════════════════════════════════╯           
+║%s# %sCopyright : %sSAN-Brother Team%s %s ║
+║%s# %sCreated Date     : %s10-09-19%s  %s ║
+║%s# %sRepositories     : %sV.0.1.0 Beta%s%s║
+╰══════════════════════════════════════════╯
  """%(R,W,GB,RE,R,W,Y,W,RM,RE,W,Y,W,CM,RE,W,Y,W,PM,RE,W))
 cek()
