@@ -46,7 +46,6 @@ def baliho():
 		r = requests.get('https://graph.facebook.com/me?access_token=' + token)
 		a = json.loads(r.text)
 		name     = a['name']
-		namef	 = a['first_name']
 		birthday = a['birthday']
 		username = a['username']
 		n.append(a['name'])
@@ -57,12 +56,11 @@ def baliho():
 
 		print ('-= PERNYATAAN-2019-SAN-FACEBOOK-TOOLS =-')
 
-		print ('[!] Selamat datang saudara 'namef' ditools SAN-Brother,')
+		print ('[!] Selamat datang  ditools SAN-Brother,')
 		print 'dengan  mengunjungi  tools  ini, secara  langsung:'
 
 		print ('Nama Lengkap 		: 'name'')
 		print ('Tanggal Lahir 		: 'birthday'')
-		print ('Facebook ID 		: 'id'')
 		print ('Facebook Username 	: 'username'')
 
 		print 'Tools ini adalah sarana pribadi penulis untuk membantu'
