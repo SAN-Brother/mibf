@@ -41,7 +41,6 @@ n = []
 ####################################################################
 #                        PROFIL PENGUNJUNG
 def baliho():
-	os.system('clear')
 	try:
 		token = open('cookie/token.log','r').read()
 		r = requests.get('https://graph.facebook.com/me?access_token=' + token)
