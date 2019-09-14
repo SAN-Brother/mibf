@@ -55,7 +55,7 @@ def baliho():
 		n.append(a['id'])
 		n.append(a['username'])
 
-		print ('-= PERNYATAAN-2019-SAN 'namef' FACEBOOK-TOOLS =-')
+		print ('-= PERNYATAAN-2019-SAN-FACEBOOK-TOOLS =-')
 
 		print ('[!] Selamat datang saudara 'namef' ditools SAN-Brother,')
 		print 'dengan  mengunjungi  tools  ini, secara  langsung:'
@@ -100,12 +100,12 @@ def show_program():
                     %sINFORMATION%s
  ------------------------------------------------------
 
-    Author 						: Soesanto
-    Statistics 					: Facebook Project via GitHub & Facebook SDK
-    Maintainers					: SAN-Brother Team
-    Last Released 				: Sep 15,2019
-    Programming Name 			: SANFAPY
-    Programming Language 		: Python
+    Author 			: Soesanto
+    Statistics 			: Facebook Project via GitHub & Facebook SDK
+    Maintainers			: SAN-Brother Team
+    Last Released 		: Sep 15,2019
+    Programming Name 		: SANFAPY
+    Programming Language 	: Python
     Development Status Version 	: v.0.0.1 Beta
 
 
