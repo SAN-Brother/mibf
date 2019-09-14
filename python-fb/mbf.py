@@ -48,7 +48,6 @@ def baliho():
 		name     = a['name']
 		namef	 = a['first_name']
 		birthday = a['birthday']
-		id       = a['id']
 		username = a['username']
 		n.append(a['name'])
 		n.append(a['first_name'])
@@ -56,7 +55,7 @@ def baliho():
 		n.append(a['id'])
 		n.append(a['username'])
 
-		print ('-= PERNYATAAN-2019-SAN- 'id' -FACEBOOK-TOOLS =-')
+		print ('-= PERNYATAAN-2019-SAN 'namef' FACEBOOK-TOOLS =-')
 
 		print ('[!] Selamat datang saudara 'namef' ditools SAN-Brother,')
 		print 'dengan  mengunjungi  tools  ini, secara  langsung:'
