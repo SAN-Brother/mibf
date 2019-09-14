@@ -57,11 +57,7 @@ def baliho():
 		print ('-= PERNYATAAN-2019-SAN-FACEBOOK-TOOLS =-')
 
 		print ('[!] Selamat datang  ditools SAN-Brother,')
-		print 'dengan  mengunjungi  tools  ini, secara  langsung:'
-
-		print ('Nama Lengkap 		: 'name'')
-		print ('Tanggal Lahir 		: 'birthday'')
-		print ('Facebook Username 	: 'username'')
+		print 'dengan  mengunjungi  tools  ini, setuju  langsung.'
 
 		print 'Tools ini adalah sarana pribadi penulis untuk membantu'
 		print 'mengelola  data dalam bisnis difacebook, pengamanan dan'
@@ -69,7 +65,7 @@ def baliho():
 		print 'user dgn berbagai cara : baik spammer, ujaran kebencian,'
 		print 'brute password anggota group dan lain sebagainya.'
 
-		print ('Meski tools ini adalah sarana pribadi, saudara 'namef' ')
+		print ('Meski tools ini adalah sarana pribadi, saudara user ')
 		print 'tetap bisa menggunakan tools ini dengan  syarat  siap'
 		print 'menanggung segala bentuk resiko, baik  cekpoint  akun,'
 		print 'suspen akun, ataupun berurusan dengan pihak  keamanan'
@@ -79,7 +75,7 @@ def baliho():
 		print 'tindakan kejahatan didalam bisnis penulis, tolong jangan'
 		print 'disalahgunakan tools ini, terimakasih.'
 
-        print              '-=SAN-Brother=-'
+                print              '-=SAN-Brother=-'
 
 	except (KeyError,IOError):
 		print R + '_     _'.center(44)
