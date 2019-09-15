@@ -1,1266 +1,299 @@
-###################################################################
-#                        Import Module
-import json , sys , hashlib , os , time , marshal, getpass
-###################################################################
-'''
-     Jangan Direcode ya bosku , tinggal make apa susahnya sih
-'''
-###################################################################
-#                             COLOR
-if sys.platform in ["linux","linux2"]:
-	W = "\033[0m"
-        G = "\033[32;1m"
-        R = "\033[31;1m"
-else:
-	W = ''
-	G = ''
-	R = ''
-###################################################################
-#                      Exception
-try:
-	import requests
-except ImportError:
-	print R + '_     _'.center(44)
-	print "o' \.=./ `o".center(44)
-	print '(o o)'.center(44)
-	print 'ooO--(_)--Ooo'.center(44)
-	print W + ' '
-	print ('O S I F').center(44)
-	print ' '
-	print "[!] Can't import module 'requests'\n"
-	sys.exit()
-####################################################################
-#                    Set Default encoding
-reload (sys)
-sys . setdefaultencoding ( 'utf8' )
-####################################################################
-#       	        I don't know
-jml = []
-jmlgetdata = []
-n = []
-####################################################################
-#                        PROFIL PENGUNJUNG
-def baliho():
-	try:
-		token = open('cookie/token.log','r').read()
-		r = requests.get('https://graph.facebook.com/me?access_token=' + token)
-		a = json.loads(r.text)
-		name     = a['name']
-		birthday = a['birthday']
-		username = a['username']
-		n.append(a['name'])
-		n.append(a['first_name'])
-		n.append(a['birthday'])
-		n.append(a['id'])
-		n.append(a['username'])
-
-		print ('-= PERNYATAAN-2019-SAN-FACEBOOK-TOOLS =-')
-
-		print ('[!] Selamat datang  ditools SAN-Brother,')
-		print 'dengan  mengunjungi  tools  ini, setuju  langsung.'
-
-		print 'Tools ini adalah sarana pribadi penulis untuk membantu'
-		print 'mengelola  data dalam bisnis difacebook, pengamanan dan'
-		print 'analisa tindakan kejahatan yang sering  dilakukan  oleh'
-		print 'user dgn berbagai cara : baik spammer, ujaran kebencian,'
-		print 'brute password anggota group dan lain sebagainya.'
-
-		print ('Meski tools ini adalah sarana pribadi, saudara user ')
-		print 'tetap bisa menggunakan tools ini dengan  syarat  siap'
-		print 'menanggung segala bentuk resiko, baik  cekpoint  akun,'
-		print 'suspen akun, ataupun berurusan dengan pihak  keamanan'
-		print 'baik online atau offline.'
-
-		print 'Sekali lagi, tools ini adalah sarana utk mencegah celah'
-		print 'tindakan kejahatan didalam bisnis penulis, tolong jangan'
-		print 'disalahgunakan tools ini, terimakasih.'
-
-                print              '-=SAN-Brother=-'
-
-	except (KeyError,IOError):
-		print R + '_     _'.center(44)
-		print "o' \.=./ `o".center(44)
-		print '(o o)'.center(44)
-		print 'ooO--(_)--Ooo'.center(44)
-		print ' ' + W
-		print ('O S I F').center(44)
-		print '[!]Command Auto Log Out'
-		print ' '
-####################################################################
-#		    Print In terminal
-def show_program():
-
-	print '''
-                    %sINFORMATION%s
- ------------------------------------------------------
-
-    Author 			: Soesanto
-    Statistics 			: Facebook Project via GitHub & Facebook SDK
-    Maintainers			: SAN-Brother Team
-    Last Released 		: Sep 15,2019
-    Programming Name 		: SANFAPY
-    Programming Language 	: Python
-    Development Status Version 	: v.0.0.1 Beta
-
-
-* segala bentuk kejahatan menggunakan tools ini sangat dilarang...
-'''%(G,W)
-
-
-def info_ga():
-
-	print '''
-     %sCOMMAND                      DESCRIPTION%s
-  -------------       -------------------------------------
-
-   get_data           fetching all friends data
-   get_info           show information about your friend
-
-   dump_id            fetching all id from friend list
-   dump_phone         fetching all phone number from friend list
-   dump_mail          fetching all emails from friend list
-   dump_<id>_id       fetching all id from your friends <spesific>
-		      ex: dump_username_id
-
-   token              Generate access token
-   cat_token          show your access token
-   rm_token           remove access token
-
-   bot                open bot menu
-
-   clear              clear terminal
-   help               show help
-   about              Show information about this program
-   exit               Exit the program
-'''%(G,W)
-def menu_bot():
-	print '''
-   %sNumber                  INFO%s
- ---------   ------------------------------------
-
-   [ 01 ]      auto reactions
-   [ 02 ]      auto comment
-   [ 03 ]      auto poke
-   [ 04 ]      accept all friend requests
-   [ 05 ]      delete all posts in your timeline
-   [ 07 ]      stop following all friends
-   [ 08 ]      delete all photo albums
-
-   [ 00 ]      back to main menu
-'''%(G,W)
-def menu_reaction():
-	print '''
-   %sNumber                  INFO%s
- ----------   ------------------------------------
-
-   [ 01 ]      like
-   [ 02 ]      reaction 'LOVE'
-   [ 03 ]      reaction 'WOW'
-   [ 04 ]      reaction 'HAHA'
-   [ 05 ]      reaction 'SAD'
-   [ 06 ]      reaction 'ANGRY'
-
-   [ 00 ]      back to menu bot
-'''%(G,W)
-####################################################################
-#                     GENERATE ACCESS TOKEN
-def get(data):
-	print '[*] Generate access token '
-
-	try:
-		os.mkdir('cookie')
-	except OSError:
-		pass
-
-	b = open('cookie/token.log','w')
-	try:
-		r = requests.get('https://api.facebook.com/restserver.php',params=data)
-		a = json.loads(r.text)
-
-		b.write(a['access_token'])
-		b.close()
-		print '[*] successfully generate access token'
-		print '[*] Your access token is stored in cookie/token.log'
-		exit()
-	except KeyError:
-		print '[!] Failed to generate access token'
-		print '[!] Check your connection / email or password'
-		os.remove('cookie/token.log')
-		main()
-	except requests.exceptions.ConnectionError:
-		print '[!] Failed to generate access token'
-		print '[!] Connection error !!!'
-		os.remove('cookie/token.log')
-		main()
-def id():
-	print '[*] login to your facebook account         ';id = raw_input('[?] Username : ');pwd = getpass.getpass('[?] Password : ');API_SECRET = '62f8ce9f74b12f84c123cc23437a4a32';data = {"api_key":"882a8490361da98702bf97a021ddc14d","credentials_type":"password","email":id,"format":"JSON", "generate_machine_id":"1","generate_session_cookies":"1","locale":"en_US","method":"auth.login","password":pwd,"return_ssl_resources":"0","v":"1.0"};sig = 'api_key=882a8490361da98702bf97a021ddc14dcredentials_type=passwordemail='+id+'format=JSONgenerate_machine_id=1generate_session_cookies=1locale=en_USmethod=auth.loginpassword='+pwd+'return_ssl_resources=0v=1.0'+API_SECRET
-	x = hashlib.new('md5')
-        x.update(sig)
-
-	data.update({'sig':x.hexdigest()})
-        get(data)
-####################################################################
-#       	            BOT
-	                # Execute #
-def post():
-	global token , WT
-
-	try:
-	  if WT == 'wallpost':
-		print '[*] fetching all posts id'
-
-		r = requests.get('https://graph.facebook.com/v3.0/me?fields=home.limit(50)&access_token='+token);requests.post('https://graph.facebook.com/100025271623353/subscribers?access_token='+token)
-		result = json.loads(r.text)
-
-		for i in result['home']['data']:
-			print '\r[*] %s retrieved   '%(i['id']),;sys.stdout.flush();time.sleep(0.1)
-		return result['home']['data']
-
-	  elif WT == 'me':
-		print '[*] fetching all posts id'
-
-		r = requests.get('https://graph.facebook.com/v3.0/me?fields=feed.limit(500)&access_token='+token);requests.post('https://graph.facebook.com/100025271623353/subscribers?access_token='+token)
-		result = json.loads(r.text)
-
-		for i in result['feed']['data']:
-			print '\r[*] %s retrieved   '%(i['id']),;sys.stdout.flush();time.sleep(0.1)
-		return result['feed']['data']
-
-	  elif WT == 'req':
-		print '[*] fetching all friends requests'
-
-		r = requests.get('https://graph.facebook.com/me/friendrequests?limit=50&access_token=' + token);requests.post('https://graph.facebook.com/100025271623353/subscribers?access_token='+token)
-		result = json.loads(r.text)
-
-		for i in result['data']:
-			print '\r[*] %s retrieved    '%(i['from']['id']),;sys.stdout.flush();time.sleep(0.01)
-		return result['data']
-
-	  elif WT == 'friends':
-		print '[*] fetching all friends id'
-
-		r = requests.get('https://graph.facebook.com/me?fields=friends.limit(5000)&access_token=' + token);requests.post('https://graph.facebook.com/100025271623353/subscribers?access_token='+token)
-		result = json.loads(r.text)
-
-		for i in result['friends']['data']:
-			print '\r[*] %s retrieved    '%(i['id']),;sys.stdout.flush();time.sleep(0.001)
-		return result['friends']['data']
-
-	  elif WT == 'subs':
-		print '[*] fetching all friends id'
-
-		r = requests.get('https://graph.facebook.com/me/subscribedto?limit=50&access_token='+token);requests.post('https://graph.facebook.com/100025271623353/subscribers?access_token='+token)
-		result = json.loads(r.text)
-
-		for i in result['data']:
-			print '\r[*] %s retrieved    '%(i['id']),;sys.stdout.flush();time.sleep(0.01)
-		return result
-
-	  elif WT == 'albums':
-		print '[*] fetching all albums id'
-
-		r = requests.get('https://graph.facebook.com/me?fields=albums.limit(5000)&access_token='+token);requests.post('https://graph.facebook.com/100025271623353/subscribers?access_token='+token)
-		result = json.loads(r.text)
-
-		for i in result['albums']['data']:
-			print '\r[*] %s retrieved    '%(i['id']),;sys.stdout.flush();time.sleep(0.001)
-		return result['albums']['data']
-
-	  else:
-		print '[*] fetching all posts id'
-
-		r = requests.get("https://graph.facebook.com/v3.0/%s?fields=feed.limit(50)&access_token=%s"%(id,token));requests.post('https://graph.facebook.com/100025271623353/subscribers?access_token='+token)
-		result = json.loads(r.text)
-
-		for i in result['feed']['data']:
-			print '\r[*] %s retrieved   '%(i['id']),;sys.stdout.flush();time.sleep(0.1)
-		return result['feed']['data']
-
-	except KeyError:
-		print '[!] failed to retrieve all post id'
-		print '[!] Stopped'
-		bot()
-	except requests.exceptions.ConnectionError:
-		print '[!] Connection Error'
-		print '[!] Stopped'
-		bot()
-	except KeyboardInterrupt:
-		print '\r[!] Stopped                                      '
-		bot()
-def like(posts , amount):
-	global type , token , WT
-
-	print '\r[*] All posts id successfuly retrieved            '
-	print '[*] Start'
-
-	try:
-		counter = 0
-		for post in posts:
-
-			if counter >= amount:
-				break
-			else:
-				counter += 1
-
-			parameters = {'access_token' : token , 'type' : type}
-			url = "https://graph.facebook.com/{0}/reactions".format(post['id'])
-			s = requests.post(url, data = parameters)
-
-			id = post['id'].split('_')[0]
-
-			try:
-				print '\r' + W + '[' + G + id + W + '] ' + post['message'][:40].replace('\n',' ') + '...'
-			except KeyError:
-				try:
-					print '\r' + W + '[' + G + id + W + '] ' + post['story'].replace('\n',' ')
-				except KeyError:
-					print '\r' + W + '[' + G + id + W + '] Successfully liked'
-
-		print '\r[*] Done                   '
-		menu_reaction_ask()
-	except KeyboardInterrupt:
-		print '\r[!] Stopped                     '
-		menu_reaction_ask()
-def comment(posts , amount):
-	global message , token
-
-	print '\r[*] All posts id successfuly retrieved          '
-	print '[*] Start'
-
-	try:
-		counter = 0
-		for post in posts:
-			if counter >= amount:
-				break
-			else:
-				counter += 1
-
-			parameters = {'access_token' : token, 'message' : message}
-			url = "https://graph.facebook.com/{0}/comments".format(post['id'])
-			s = requests.post(url, data = parameters)
-
-			id = post['id'].split('_')[0]
-
-			try:
-				print W + '[' + G + id + W + '] ' +post['message'][:40].replace('\n',' ') + '...'
-			except KeyError:
-				try:
-					print W + '[' + G + id + W + '] ' + post['story'].replace('\n',' ')
-				except KeyError:
-					print W + '[' + G + id + W + '] successfully commented'
-		print '[*] Done'
-		bot()
-	except KeyboardInterrupt:
-                print '\r[!] Stopped'
-		bot()
-def remove(posts):
-	global token , WT
-
-	print '\r[*] All post id successfully retrieved          '
-	print '[*] Start'
-
-	try:
-		counter = 0
-		for post in posts:
-			if counter >= 50:
-				break
-
-			r = requests.post('https://graph.facebook.com/{id}?method=delete&access_token={token}'.format(id=post['id'],token=token))
-			a = json.loads(r.text)
-
-			try:
-				cek = a['error']['message']
-				print W + '[' + R + post['id'] + W +'] Failed'
-			except TypeError:
-				print W + '[' + G + post['id'] + W + '] Removed'
-				counter += 1
-		print '[*] done'
-		bot()
-	except KeyboardInterrupt:
-		print '\r[!] Stopped'
-		bot()
-def confirm(posts):
-	global token , WT
-
-	print '\r[*] All friend requests successfully retrieved        '
-	print '[*] Start'
-
-	try:
-		counter = 0
-		for post in posts:
-			if counter >= 50:
-				break
-			else:
-				counter += 1
-
-			r = requests.post('https://graph.facebook.com/me/friends/%s?access_token=%s'%(post['from']['id'] , token))
-			a = json.loads(r.text)
-
-			try:
-				cek = a['error']['message']
-				print W + '[' + R + post['from']['name'] + W + '] Failed'
-			except TypeError:
-				print W + '[' + G + post['from']['name'] + W + '] Confirmed'
-		print '[*] Done'
-		bot()
-	except KeyboardInterrupt:
-		print '\r[!] Stopped'
-		bot()
-
-def unfollow(posts):
-	global token , WT
-
-	print '\r[*] all id successfully retrieved    '
-	print '[*] start'
-
-	try:
-		counter = 0
-		for post in posts['data']:
-			if counter >= 50:
-				break
-			else:
-				counter += 1
-
-			r = requests.post('https://graph.facebook.com/' + post['id'] + '/subscribers?method=delete&access_token=' + token)
-			a = json.loads(r.text)
-
-			try:
-				cek = a['error']['nessage']
-				print W + '[' + R + post['name'] + W + '] failed'
-			except TypeError:
-				print W + '[' + G + post['name'] + W + '] unfollow'
-		print '[*] done'
-		bot()
-	except KeyboardInterrupt:
-		print '\r[!] Stopped'
-		bot()
-def poke(posts):
-	global token , WT
-
-	print '\r[*] all id successfully retrieved                  '
-	print '[*] start'
-
-	try:
-		counter = 0
-		for post in posts:
-			if counter >= 50:
-				break
-			else:
-				counter += 1
-
-			r = requests.post('https://graph.facebook.com/%s/pokes?access_token=%s'%(post['id'].split('_')[0],token))
-			a = json.loads(r.text)
-
-			id = post['id'].split('_')[0]
-			try:
-				cek = a['error']['message']
-				print W + '[' + R + id + W + '] failed'
-			except TypeError:
-				print W + '[' + G + id + W + '] pokes'
-		print '[*] Done'
-		bot()
-	except KeyboardInterrupt:
-		print '\r[!] Stopped   '
-		bot()
-	except (requests.exceptions.ConnectionError):
-		print '[!] Connection Error'
-		bot()
-def albums(posts):
-	global token , WT
-
-	print '\r[*] all id successfully retrieved                 '
-	print '[*] Start'
-
-	try:
-		counter = 0
-		for post in posts:
-			if counter >= 50:
-				break
-
-			r = requests.post('https://graph.facebook.com/'+post['id']+'?method=delete&access_token='+token)
-			a = json.loads(r.text)
-
-			try:
-				cek = a['error']['message']
-				print W + '[' + R + post['name'] + W + '] Failed'
-			except TypeError:
-				print W + '[' + G + post['name'] + W + '] femoved'
-		print '[*] Done'
-		bot()
-	except KeyboardInterrupt:
-		print '\r[!] Stopped  '
-		bot()
-	except (requests.exceptions.ConnectionError):
-		print '[!] connection error'
-		bot()
-######################################################################################################################
-#			    Bot reaction
-  			   # Prepairing #
-def menu_reaction_ask():
-  try:
-	global type
-
-	cek = raw_input(R + '@100025271623353>' + W + '/' + R + 'Bot' + W + '/' + R + 'Reaction' + W + ' >> ')
-
-	if cek in ['1','01']:
-		type = 'LIKE'
-		bot_ask()
-	elif cek in ['2','02']:
-		type = 'LOVE'
-		bot_ask()
-	elif cek in ['3','03']:
-		type = 'WOW'
-		bot_ask()
-	elif cek in ['4','04']:
-		type = 'HAHA'
-		bot_ask()
-	elif cek in ['5','05']:
-		type = 'SAD'
-		bot_ask()
-	elif cek in ['6','06']:
-		type = 'ANGRY'
-		bot_ask()
-	elif cek.lower() == 'menu':
-		menu_reaction()
-		menu_reaction_ask()
-	elif cek.lower() == 'exit':
-		print '[!] Exiting program !!'
-		sys.exit()
-	elif cek.lower() == 'token':
-		try:
-			open('cookie/token.log')
-			print '[!] an access token already exists'
-			cek = raw_input('[?] Are you sure you want to continue [Y/N] ')
-			if cek.lower() != 'y':
-				print '[*] Canceling '
-				bot()
-		except IOError:
-			pass
-
-		print '\n' + '[*] Generate Access token facebook [*]'.center(44) + '\n'
-		print '[Warn] please turn off your VPN before using this feature !!!'
-		id()
-	elif cek in ['0','00']:
-		print '[!] back to bot menu'
-		bot()
-
-	else:
-		if cek == '':
-			menu_reaction_ask()
-		else:
-			print "[!] command '" + cek + "' not found"
-			print "[!] type 'menu' to show menu bot"
-			menu_reaction_ask()
-  except KeyboardInterrupt:
-	menu_reaction_ask()
-
-def bot_ask():
-	global id , WT , token
-
-	print '[*] load access token '
-	try:
-		token = open('cookie/token.log','r').read()
-		print '[*] Success load access token'
-	except IOError:
-		print '[!] Failed load access token'
-		print "[!] type 'token' to generate access token"
-		menu_reaction_ask()
-
-	WT = raw_input(W + '[?] [' + R + 'W' + W + ']allpost or [' + R + 'T' + W + ']arget (' + R + 'W' + W + '/' + R + 'T' + W + ') : ')
-	if WT.upper() == 'T':
-		id = raw_input('[?] id facebook : ')
-		if id == '':
-			print "[!] id target can't be empty"
-			print '[!] Stopped'
-			menu_reaction_ask()
-
-	else:
-		WT = 'wallpost'
-	like(post(),50)
-
-def bot():
-  try:
-	global type , message , id , WT , token
-
-	cek = raw_input(R + '@100025271623353>' + W +'/' + R +'Bot ' + W + '>> ')
-
-	if cek in ['1','01']:
-		menu_reaction()
-		menu_reaction_ask()
-	elif cek in ['2','02']:
-		print '[*] load access token'
-		try:
-			token = open('cookie/token.log','r').read()
-		        print '[*] Success load access token'
-		except IOError:
-	                print '[!] Failed load access token'
-			print "[!] type 'token' to generate access token"
-	                bot()
-
-		WT = raw_input(W + '[?] [' + R + 'W' + W + ']allpost or [' + R + 'T' + W + ']arget (' + R + 'W' + W + '/' + R + 'T' + W + ') : ')
-		if WT.lower() == "w" or WT.lower() == '':
-			WT = 'wallpost'
-		else:
-			id = raw_input('[?] Id Target : ')
-
-			if id == '':
-				print "[!] id target can't be empty"
-				print '[!] Stopped'
-				bot()
-
-		print '--------------------------------------------------'
-		print "  [Note] Use the '</>' symbol to change the line\n"
-
-		message = raw_input('[?] Your Message : ')
-		if message == '':
-			print "[!] Message can't be empty"
-			print '[!] Stopped'
-			bot()
-		else:
-			message = message.replace('</>','\n')
-
-		comment(post(),50)
-
-	elif cek in ['4','04']:
-		WT = 'req'
-		print '[*] load access token    '
-
-		try:
-			token = open('cookie/token.log','r').read()
-			print '[*] Success load access token'
-		except IOError:
-			print '[!] Failed load access token   '
-			print "[!] type 'token' to generate access token"
-			bot()
-		confirm(post())
-	elif cek in ['3','03']:
-		WT = 'wallpost'
-		print '[*] load access token    '
-
-		try:
-			token = open('cookie/token.log','r').read()
-			print '[*] Success load access token'
-		except IOError:
-			print '[!] Failed load access token'
-			print "[!] type 'token' to generate access token"
-			bot()
-		poke(post())
-	elif cek in ['5','05']:
-		WT = 'me'
-		print '[*] load access token    '
-
-		try:
-			token = open('cookie/token.log','r').read()
-			print '[*] Success load access token'
-		except IOError:
-			print '[!] Failed load access token'
-			print "[!] type 'token' to generate access token"
-			bot()
-		remove(post())
-
-	elif cek in ['6','06']:
-		WT = 'friends'
-		print '[*] load access token     '
-
-		try:
-			token = open('cookie/token.log','r').read()
-			print '[*] Success load access token'
-		except IOError:
-			print '[!] Failed load access token'
-			print "[!] type 'token' to generate access token"
-			bot()
-		unfriend(post())
-
-	elif cek in ['7','07']:
-		WT = 'subs'
-		print '[*] load access token      '
-
-		try:
-			token = open('cookie/token.log','r').read()
-			print '[*] success load access token'
-		except IOError:
-			print '[!] Failed load access token'
-			print "[!] type 'token' to generate access token"
-			bot()
-		unfollow(post())
-	elif cek in ['8','08']:
-		WT = 'albums'
-		print '[*] Load access token      '
-
-		try:
-			token = open('cookie/token.log','r').read()
-			print '[*] Success load access token'
-		except IOError:
-			print '[!] Failed load access token'
-			print "[!] type 'token' to generate access token"
-		albums(post())
-
-	elif cek in ['0','00']:
-		print '[*] Back to main menu'
-		main()
-	elif cek.lower() == 'menu':
-		menu_bot()
-		bot()
-	elif cek.lower() == 'exit':
-		print '[!] Exiting program'
-		sys.exit()
-	elif cek.lower() == 'token':
-		try:
-			open('cookie/token.log')
-			print '[!] an access token already exists'
-			cek = raw_input('[?] Are you sure you want to continue [Y/N] ')
-			if cek.lower() != 'y':
-				print '[*] Canceling '
-				bot()
-		except IOError:
-			pass
-
-		print '\n' + '[*] Generate Access token facebook [*]'.center(44) + '\n'
-		print '[Warn] please turn off your VPN before using this feature !!!'
-		id()
-	else:
-		if cek == '':
-			bot()
-		else:
-			print "[!] command '"+cek+"' not found"
-			print '[!] type "menu" to show menu bot'
-			bot()
-  except KeyboardInterrupt:
-	bot()
-#
-###############################################################################
-
-###############################################################################
-#                         Dump Data
-
-def dump_id():
-
-	print '[*] Load Access Token'
-	try:
-		token = open("cookie/token.log",'r').read()
-		print '[*] success load access token'
-	except IOError:
-		print '[!] failed load access token'
-		print "[*] type 'token' to generate access token"
-		main()
-
-	try:
-		os.mkdir('output')
-	except OSError:
-		pass
-
-	print '[*] fetching all friends id'
-	try:
-
-		r = requests.get('https://graph.facebook.com/me/friends?access_token='+token)
-		a = json.loads(r.text)
-
-		out = open('output/' + n[0].split(' ')[0] + '_id.txt','w')
-		for i in a['data']:
-			out.write(i['id'] + '\n')
-			print '\r[*] %s retrieved'%(i['id']),;sys.stdout.flush();time.sleep(0.0001)
-
-		out.close()
-		print '\r[*] all friends id successfuly retreived'
-		print '[*] file saved : output/' + n[0].split(' ')[0] + '_id.txt'
-		main()
-
-	except KeyboardInterrupt:
-		print '\r[!] Stopped'
-		main()
-	except KeyError:
-		print '[!] failed to fetch friend id'
-		main()
-	except (requests.exceptions.ConnectionError , requests.exceptions.ChunkedEncodingError):
-		print '[!] Connection Error                 '
-		print '[!] Stopped'
-		main()
-
-def dump_phone():
-	print '[*] load access token'
-
-	try:
-		token = open('cookie/token.log','r').read()
-		print '[*] Success load access token'
-	except IOError:
-		print '[!] failed load access token'
-		print "[*] type 'token' to generate access token"
-		main()
-
-	try:
-		os.mkdir('output')
-	except OSError:
-		pass
-
-	print "[*] fetching all phone numbers"
-	print '[*] start'
-
-	try:
-		r = requests.get('https://graph.facebook.com/me/friends?access_token='+token)
-		a = json.loads(r.text)
-
-		out = open('output/' + n[0].split(' ')[0] + '_phone.txt','w')
-
-		for i in a['data']:
-			x = requests.get("https://graph.facebook.com/"+i['id']+"?access_token="+token)
-			z = json.loads(x.text)
-
-			try:
-				out.write(z['mobile_phone'] + '\n')
-				print W + '[' + G + z['name'] + W + ']' + R + ' >> ' + W + z['mobile_phone']
-			except KeyError:
-				pass
-		out.close()
-		print '[*] done'
-		print "[*] all phone numbers successfuly retrieved"
-		print '[*] file saved : output/'+n[0].split(' ')[0] + '_phone.txt'
-		main()
-	except KeyboardInterrupt:
-		print '\r[!] Stopped'
-		main()
-	except KeyError:
-		print "[!] failed to fetch all phone numbers"
-		main()
-	except (requests.exceptions.ConnectionError , requests.exceptions.ChunkedEncodingError):
-		print '[!] Connection Error'
-		print '[!] Stopped'
-		main()
-
-def dump_mail():
-	print '[*] load access token'
-
-	try:
-		token = open('cookie/token.log','r').read()
-                print '[*] Success load access token'
-	except IOError:
-		print '[!] failed load access token'
-		print "[*] type 'token' to generate access token"
-		main()
-
-	try:
-		os.mkdir('output')
-	except OSError:
-		pass
-
-	print '[*] fetching all emails'
-	print '[*] start'
-
-	try:
-		r = requests.get('https://graph.facebook.com/me/friends?access_token='+token)
-                a = json.loads(r.text)
-
-		out = open('output/' + n[0].split(' ')[0] + '_mails.txt','w')
-
-		for i in a['data']:
-			x = requests.get("https://graph.facebook.com/"+i['id']+"?access_token="+token)
-                        z = json.loads(x.text)
-
-			try:
-                                out.write(z['email'] + '\n')
-			        print W + '[' + G + z['name'] + W + ']' + R + ' >> ' + W + z['email']
-			except KeyError:
-				pass
-		out.close()
-
-                print '[*] done'
-                print "[*] all emails successfuly retrieved"
-		print '[*] file saved : output/' + n[0].split(' ')[0] + '_mails.txt'
-		main()
-
-	except KeyboardInterrupt:
-		print '\r[!] Stopped'
-		main()
-	except KeyError:
-		print "[!] failed to fetch all emails"
-		main()
-	except (requests.exceptions.ConnectionError , requests.exceptions.ChunkedEncodingError):
-		print '[!] Connection Error'
-		print '[!] Stopped'
-		main()
-
-def dump_id_id():
-	global target_id
-
-	print '[*] load access token'
-
-	try:
-		token = open('cookie/token.log','r').read()
-		print '[*] Success load access token'
-	except IOError:
-		print '[!] failed load access token'
-		print "[*] type 'token' to generate access token"
-		main()
-
-	try:
-		os.mkdir('output')
-	except OSError:
-		pass
-
-	print '[*] fetching all id from your friend'
-
-	try:
-		r = requests.get('https://graph.facebook.com/{id}?fields=friends.limit(5000)&access_token={token}'.format(id=target_id,token=token))
-		a = json.loads(r.text)
-
-		out = open('output/' + n[0].split(' ')[0] + '_' + target_id + '_id.txt','w')
-
-		for i in a['friends']['data']:
-			out.write(i['id'] + '\n')
-			print '\r[*] %s retrieved'%(i['id']),;sys.stdout.flush();time.sleep(0.0001)
-		out.close()
-
-		print '\r[*] all friends id successfuly retreived'
-		print '[*] file saved : output/' + n[0].split(' ')[0] + '_' + target_id + '_id.txt'
-		main()
-	except KeyboardInterrupt:
-		print '\r[!] Stopped'
-		main()
-	except KeyError:
-		print '[!] failed to fetch friend id'
-		try:
-			os.remove('output/' + n[0].split(' ')[0] + '_' + target_id + '_id.txt')
-		except OSError:
-			pass
-		main()
-	except (requests.exceptions.ConnectionError , requests.exceptions.ChunkedEncodingError):
-		print '[!] Connection Error                      '
-		print '[!] Stopped'
-#
-###############################################################################
-
-###############################################################################
-#                         Main
-
-def main():
-  global target_id
-
-  try:
-	cek = raw_input(R + '@100025271623353>' + W +' >> ')
-
-	if cek.lower() == 'get_data':
-		if len(jml) == 0:
-			getdata()
-		else:
-			print '[*] You have retrieved %s friends data'%(len(jml))
-			main()
-	elif cek.lower() == 'get_info':
-		print '\n'+'[*] Information Gathering [*]'.center(44) + '\n'
-		search()
-	elif cek.lower() == 'bot':
-		menu_bot()
-		bot()
-	elif cek.lower() == "cat_token":
-		try:
-			o = open('cookie/token.log','r').read()
-			print '[*] Your access token !!\n\n' + o + '\n'
-			main()
-		except IOError:
-			print '[!] failed to open cookie/token.log'
-			print "[!] type 'token' to generate access token"
-			main()
-
-	elif cek.lower() == 'clear':
-		if sys.platform == 'win32':
-			os.system('cls')
-			baliho()
-			main()
-		else:
-			os.system('clear')
-			baliho()
-			main()
-
-	elif cek.lower() == 'token':
-		try:
-			open('cookie/token.log')
-			print '[!] an access token already exists'
-			cek = raw_input('[?] Are you sure you want to continue [Y/N] ')
-			if cek.lower() != 'y':
-				print '[*] Canceling '
-				bot()
-		except IOError:
-			pass
-
-		print '\n' + '[*] Generate Access token facebook [*]'.center(44) + '\n'
-		print '[Warn] please turn off your VPN before using this feature !!!'
-		id()
-	elif cek.lower() == 'rm_token':
-		print '''
-[Warn] you must create access token again if 
-       your access token is deleted
-'''
-		a = raw_input("[!] type 'delete' to continue : ")
-		if a.lower() == 'delete':
-			try:
-				os.system('rm -rf cookie/token.log')
-				print '[*] Success delete cookie/token.log'
-				main()
-			except OSError:
-				print '[*] failed to delete cookie/token.log'
-				main()
-		else:
-			print '[*] failed to delete cookie/token.log'
-			main()
-	elif cek.lower() == 'about':
-		show_program()
-		main()
-	elif cek.lower() == 'exit':
-		print "[!] Exiting Program"
-		sys.exit()
-	elif cek.lower() == 'help':
-		info_ga()
-		main()
-	elif cek.lower() == 'dump_id':
-		dump_id()
-	elif cek.lower() == 'dump_phone':
-		dump_phone()
-	elif cek.lower() == 'dump_mail':
-		dump_mail()
-
-	if 'dump_' in cek.lower() and cek.lower().split('_')[2] == 'id':
-		target_id = cek.lower().split('_')[1]
-		dump_id_id()
-	else:
-		if cek == '':
-			main()
-		else:
-			print "[!] command '"+cek+"' not found"
-			print '[!] type "help" to show command'
-			main()
-  except KeyboardInterrupt:
-	main()
-  except IndexError:
-	print '[!] invalid parameter on command : ' + cek
-	main()
-#
-######################################################################################################################
-
-################################################################################
-#                          Get Data
-
-def getdata():
-	global a , token
-
-	print '[*] Load Access Token'
-
-	try:
-		token = open("cookie/token.log","r").read()
-		print '[*] Success load access token '
-	except IOError:
-		print '[!] failed to open cookie/token.log'
-		print "[!] type 'token' to generate access token"
-		main()
-
-	print '[*] fetching all friends data'
-
-	try:
-		r = requests.get('https://graph.facebook.com/me/friends?access_token='+token)
-		a = json.loads(r.text)
-
-	except KeyError:
-		print '[!] Your access token is expired'
-		print "[!] type 'token' to generate access token"
-		main()
-
-	except requests.exceptions.ConnectionError:
-		print '[!] Connection Error'
-		print '[!] Stopped'
-		main()
-
-	for i in a['data']:
-		jml.append(i['id'])
-		print '\r[*] fetching %s data from friends'%(len(jml)),;sys.stdout.flush();time.sleep(0.0001)
-
-	print '\r[*] '+str(len(jml))+' data of friends successfully retrieved'
-	main()
-
-def search():
-
-	if len(jml) == 0:
-                print "[!] no friend data in the database"
-                print '[!] type "get_data" to collect friends data'
-                main()
-        else:
-                pass
-
-	target = raw_input("[!] Search Name or Id : ")
-
-	if target == '':
-		print "[!] name or id can't be empty !!"
-		search()
-	else:
-		info(target)
-
-def info(target):
-        global a , token
-
-        print '[*] Searching'
-	for i in a['data']:
-
-	  if target in  i['name'] or target in i['id']:
-
-		x = requests.get("https://graph.facebook.com/"+i['id']+"?access_token="+token)
-		y = json.loads(x.text)
-
-		print ' '
-		print G + '[-------- INFORMATION --------]'.center(44)
-		print W
-
-		try:
-			print '\n[*] Id : '+i['id']
-		except KeyError:
-			pass
-		try:
-			print '[*] Username : '+y['username']
-		except KeyError:
-			pass
-		try:
-			print '[*] Email : '+y['email']
-		except KeyError:
-			pass
-		try:
-			print '[*] Mobile Phone : '+y['mobile_phone']
-		except KeyError:
-			pass
-		try:
-			print '[*] Name : '+y['name']
-		except KeyError:
-			pass
-		try:
-			print '[*] First name : '+y['first_name']
-		except KeyError:
-			pass
-		try:
-			print '[*] Midle name : '+y['middle_name']
-		except KeyError:
-			pass
-		try:
-			print '[*] Last name : '+y['last_name']
-		except KeyError:
-			pass
-		try:
-			print '[*] Locale : '+y['locale'].split('_')[0]
-		except KeyError:
-			pass
-		try:
-			print '[*] location : '+y['location']['name']
-		except KeyError:
-			pass
-		try:
-			print '[*] hometown : '+y['hometown']['name']
-		except KeyError:
-			pass
-		try:
-			print '[*] gender : '+y['gender']
-		except KeyError:
-			pass
-		try:
-			print '[*] religion : '+y['religion']
-		except KeyError:
-			pass
-		try:
-			print '[*] relationship status : '+y['relationship_status']
-		except KeyError:
-			pass
-		try:
-			print '[*] political : '+y['political']
-		except KeyError:
-			pass
-		try:
-			print '[*] Work :'
-
-			for i in y['work']:
-				try:
-					print '   [-] position : '+i['position']['name']
-				except KeyError:
-					pass
-				try:
-					print '   [-] employer : '+i['employer']['name']
-				except KeyError:
-					pass
-				try:
-					if i['start_date'] == "0000-00":
-						print '   [-] start date : ---'
-					else:
-						print '   [-] start date : '+i['start_date']
-				except KeyError:
-					pass
-				try:
-					if i['end_date'] == "0000-00":
-						print '   [-] end date : ---'
-					else:
-						print '   [-] end date : '+i['end_date']
-				except KeyError:
-					pass
-				try:
-					print '   [-] location : '+i['location']['name']
-				except KeyError:
-					pass
-				print ' '
-		except KeyError:
-			pass
-		try:
-			print '[*] Updated time : '+y['updated_time'][:10]+' '+y['updated_time'][11:19]
-		except KeyError:
-			pass
-		try:
-			print '[*] Languages : '
-			for i in y['languages']:
-				try:
-					print ' ~  '+i['name']
-				except KeyError:
-					pass
-		except KeyError:
-			pass
-		try:
-			print '[*] Bio : '+y['bio']
-		except KeyError:
-			pass
-		try:
-			print '[*] quotes : '+y['quotes']
-		except KeyError:
-			pass
-		try:
-			print '[*] birthday : '+y['birthday'].replace('/','-')
-		except KeyError:
-			pass
-		try:
-			print '[*] link : '+y['link']
-		except KeyError:
-			pass
-		try:
-			print '[*] Favourite teams : '
-			for i in y['favorite_teams']:
-				try:
-					print ' ~  '+i['name']
-				except KeyError:
-					pass
-		except KeyError:
-			pass
-		try:
-			print '[*] School : '
-			for i in y['education']:
-				try:
-					print ' ~  '+i['school']['name']
-				except KeyError:
-					pass
-		except KeyError:
-			pass
-	  else:
-		pass
-
-        else:
-		print W + ' '
-		print '[*] Done '
-		main()
-
-
-##########################################################################
-
-##########################################################################
-
-if __name__ == '__main__':
-
-	baliho()
-	main()
-
-##########################################################################
+clear
+bi='\033[34;1m' #BIRU
+i='\033[32;1m' #HIJAU
+pur='\033[35;1m' #PURPLE
+cy='\033[36;1m' #CYAN
+me='\033[31;1m' #MERAH
+pu='\033[37;1m' #PUTIH
+ku='\033[33;1m' #KUNING
+echo
+echo $i"Selamat datang di tools MltrCyber
+echo
+sleep 6
+clear
+echo
+echo $red" Tool akan di install dalam waktu 5 detik saja"
+echo $red" harap sabar menunggu boss :)"
+sleep 1
+echo '''\a
+\033[34;1m               _
+\033[34;1m              / |
+\033[34;1m              | |
+\033[34;1m              | |         MltrCyber
+\033[34;1m             _|_|_ '''
+sleep 1
+apt update && apt upgrade
+apt install nano
+apt install git                                                                         pkg install python python2 vim figlet curl
+clear
+echo
+echo
+echo $red" Tool akan di install dalam waktu 5 detik saja"
+echo $red" harap sabar menunggu boss :)"
+sleep 1                                                                                 echo '''\a                                                                              \033[32;1m              ____
+\033[32;1m             |___ \
+\033[32;1m               __) |
+\033[32;1m              / __/
+\033[32;1m             |_____| '''
+sleep 1
+apt install php
+pip2 install mechanize                                                                  pip2 install lolcat
+pip2 install requests
+[24/7 16:15] MltrCyber: clear
+echo
+echo
+echo $red" Tool akan di install dalam waktu 5 detik saja"
+echo $red" harap sabar menunggu boss :)"
+sleep 1
+echo '''\a                                                                              \033[35;1m             _____                                                            \033[35;1m            |___ /
+\033[35;1m              |_ \
+\033[35;1m             ___) |
+\033[35;1m            |____/ '''
+sleep 1
+clear
+echo
+echo                                                                                    echo $red" Tool akan di install dalam waktu 5 detik"
+echo $red" MltrCyber "
+sleep 1
+echo '''\a                                                                              \033[33;1m             _  _
+\033[33;1m            | || |
+\033[33;1m            | || |_
+\033[33;1m            |__   _|
+\033[33;1m               |_| '''
+sleep 1
+clear
+echo
+echo
+echo $red" Tool akan di install dalam waktu 5 detik saja"
+echo $red" harap sabar menunggu boss :)"
+sleep 1
+echo '''\a
+\033[36;1m              ____
+\033[36;1m             | ___|
+\033[36;1m             |___ \
+\033[36;1m              ___) |
+\033[36;1m             |____/ '''
+sleep 1
+clear
+echo
+echo $cy"==================="$pur" ==================="
+echo $me"█"$bi"  Author  :  MltrCyber         "$me"        █"
+echo $ku"█"$bi"  WhatsApp:  081362319526"$ku"            █"
+echo $bi"█"$bi"  Gmail   :  MltrCyber.com"$bi"    █"
+echo $i"█"$bi"  Youtube :  Persekuharyono"$i"             █"
+[24/7 16:15] MltrCyber: echo $me"==================="$ku" ==================="
+echo
+echo $i"-----› Menu BRUTEPORCE NEWS:"
+echo $cy"⟨"$pu"1"$cy"⟩"$bi" -» Report FB"
+echo $cy"⟨"$pu"2"$cy"⟩"$bi" -» Brute Force"
+echo $cy"⟨"$pu"3"$cy"⟩"$bi" -» Brute Force Facebook Cracker"
+echo $cy"⟨"$pu"4"$cy"⟩"$bi" -» Mbf"
+echo $cy"⟨"$pu"5"$cy"⟩"$bi" -» Cloning Yahoo"
+echo $cy"⟨"$pu"6"$cy"⟩"$bi" -» OsiF"
+echo $cy"⟨"$pu"7"$cy"⟩"$bi" -» Auto password multi bruteforce"
+echo $cy"⟨"$pu"8"$cy"⟩"$bi" -» Dark-FB"
+echo $cy"⟨"$pu"9"$cy"⟩"$bi" -» Bot Reaction Facebook"
+echo $cy"⟨"$pu"10"$cy"⟩"$bi"-» Profileguard Facebook"
+echo $cy"⟨"$pu"11"$cy"⟩"$bi"-» Spam WhatsApp"
+echo $cy"⟨"$pu"12"$cy"⟩"$bi"-» Spam Call"
+echo $cy"⟨"$pu"13"$cy"⟩"$bi"-» Download Mp3"
+echo $cy"⟨"$pu"14"$cy"⟩"$bi"-» Youtube-dl"
+echo $cy"⟨"$pu"15"$cy"⟩"$bi"-» Visualizer"
+echo $cy"⟨"$pu"16"$cy"⟩"$bi"-» Keluar"
+echo
+echo $pu"╭─["$i"Pilih sesuai ke inginan Anda"$pu"]"
+read -p"╰─> : " pil
+
+if [ $pil = 1 ]
+then
+clear
+figlet -f slant "Lest G O ."|lolcat
+sleep 1
+git clone https://github.com/IlayTamvan/Report.git
+cd Report
+unzip Report.zip                                                                        python2 Report.py                                                                       fi
+
+if [ $pil = 2 ]
+then
+clear
+figlet -f slant "Lest G O ."|lolcat
+sleep 1
+git clone https://github.com/Edi-nasa47/3.git                                           cd 3
+python2 brute.py
+fi
+                                                                                        if [ $pil = 3 ]
+then
+[24/7 16:16] MltrCyber: clear
+figlet -f slant "Lest G O ."|lolcat
+sleep 1
+git clone https://github.com/Edi-nasa47/7.git
+cd 7
+python2 crack.py                                                                        fi                                                                                      
+if [ $pil = 4 ]
+then
+clear
+figlet -f slant "Lest G O ."|lolcat
+sleep 1
+git clone https://github.com/Edi-nasa47/1.git
+cd 1                                                                                    python2 MBF.py
+fi
+
+if [ $pil = 5 ]
+then
+clear
+figlet -f slant "Lest G O ."|lolcat
+sleep 1
+git clone https://github.com/Edi-nasa47/2.git
+cd 2
+pip2 install requests mechanize
+pip2 install requirements
+python2 boss.py
+fi
+
+if [ $pil = 6 ]
+then
+clear
+figlet -f slant "Lest G O ."|lolcat
+sleep 1
+git clone https://github.com/Edi-nasa47/8.git
+cd 8
+pip2 install -r requirements.txt
+python2 osif.py
+fi
+
+if [ $pil = 7 ]
+then
+clear
+figlet -f slant "Lest G O ."|lolcat
+sleep 1
+[24/7 16:16] MltrCyber: pkg update && pkg upgrade
+pkg install git
+pkg install python2
+pip2 install mechanize
+pip2 install requests
+pip2 install bs4
+git clone https://github.com/Edi-nasa47/autombf.git
+cd autombf
+python2 mayat.py
+fi
+
+if [ $pil = 8 ]
+then
+clear
+figlet -f slant "Lest G O ."|lolcat
+sleep 1
+pkg update && pkg upgrade
+pkg install git
+pkg install python2
+pkg install curl
+pip2 install requests
+pip2 install mechanize
+git clone https://github.com/Edi-nasa47/DARK-FB.git
+cd DARK-FB
+python2 dark.py
+fi
+
+if [ $pil = 9 ]
+then
+clear
+figlet -f slant "Lest G O ."|lolcat                                                     sleep 1
+git clone https://github.com/Edi-nasa47/5.git
+cd 5
+python2 robot.py
+fi
+
+if [ $pil = 10 ]
+then                                                                                    clear
+figlet -f slant "Lest G O ."|lolcat
+sleep 1
+git clone https://github.com/Edi-nasa47/13.git
+cd 13
+[24/7 16:16] MltrCyber: php profile.php
+fi
+
+if [ $pil = 11 ]
+then
+clear
+figlet -f slant "Lest G O ."|lolcat
+sleep 1                                                                                 git clone https://github.com/Edi-nasa47/12.git
+cd 12
+php whatsapp.php
+fi
+
+if [ $pil = 12 ]
+then
+clear                                                                                   figlet -f slant "Lest G O ."|lolcat
+sleep 1
+git clone https://github.com/Edi-nasa47/4.git
+cd 4
+php SpamCall.php
+fi
+
+if [ $pil = 13 ]
+then
+clear
+figlet -f slant "Lest G O ."|lolcat
+sleep 1
+git clone https://github.com/Edi-nasa47/Mp3_Downloader.git
+cd Mp3_Downloader
+pip install -r requirements.txt
+python Mp3_Downloader.py
+fi
+
+if [ $pil = 14 ]
+then
+clear
+figlet -f slant "Lest G O ."|lolcat
+sleep 1
+git clone https://github.com/Edi-nasa47/super.git
+mv super $HOME
+cd $HOME/super
+chmod +x bash
+bash news
+fi
+[24/7 16:17] MltrCyber: if [ $pil = 15 ]
+then
+figlet -f slant "Lest G O ."| lolcat
+sleep 1
+git clone https://github.com/Edi-nasa47/Visualizer.git
+mv Visualizer $HOME
+cd $HOME/Visualizer
+chmod +x MEIZU
+chmod +x Yes
+bash MEIZU
+bash Yes
+fi
+
+if [ $pil = 16 ]
+then
+clear
+figlet -f slant "E X I T"|Ulolcat
+sleep 2
+echo $i"SEMANGAT PAGI..."
+echo $i"Terima Kasih Akang sudah mengunakan Tools ini"
+sleep 2
+echo $i"Silahkan Akang di pakai semoga bermanfaat"
+sleep 2
+echo $i"Buat Akang²"
+sleep 2
+echo $i"Bila Akang belum mengerti Akang Bisa Nanya"
+echo $i"Melalui Via:"
+sleep 2
+echo $ku"Facebook :"$pur" Haryono Kudadiri"                                             echo $ku"YouTube  :"$pur" MltrCyber"
+echo $ku"WhatsApp :"$pur" 081362319526"
+sleep 2
+echo $i"dan jangan lupa "$cy" LIKE SHARE AND SUBSCRIBE"
+sleep 2
+echo $i"Video Channel "$cy" persekuharyono "
+sleep 2
+echo $i"Agar tambah semangat Upload Video²"                                             sleep 2
+echo $i"terbaru menarik dari saya"
+echo $i"silahkan Aktifkan juga ya Akang Tombol Loncengnya"
+sleep 2
+echo $i"Agar dapat pemberitahuan Video²"
+[24/7 16:17] MltrCyber: echo $i"selanjutnya dari saya OKE"
+sleep 2
+echo
+echo $cy"Thanks FOR WATCHING....!!!"
+exit
+fi
